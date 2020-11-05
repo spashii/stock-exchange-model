@@ -16,6 +16,9 @@ public class Main {
         StockExchange se = new StockExchange("BSE");
         Trader t;
 
+        Interpreter i = new Interpreter(se);
+        i.startSession(">>");
+
         se.addCompany(new Company("INFY", "INFY", "IT", 890, 890, 890, 890));
         se.addCompany(new Company("TCS", "TCS", "IT", 2250, 2250, 2250, 2250));
         se.addCompany(new Company("SBI", "SBI", "Banking", 195, 195, 195, 195));
@@ -70,7 +73,6 @@ public class Main {
         }
 
 
-        Interpreter i = new Interpreter(se);
 
         System.out.println("\n");
 

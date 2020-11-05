@@ -57,8 +57,11 @@ public class Interpreter extends Parser {
             System.out.print(prompt + " ");
             String input = s.nextLine();
             String[] parsed = parseLine(input);
-            for(String i : this.interpret(parsed)){
-                System.out.println(i);
+            String[] interpreted = interpret(parsed);
+            if (interpreted != null) {
+                for (String i : interpreted) {
+                    System.out.println(i);
+                }
             }
         }
     }
