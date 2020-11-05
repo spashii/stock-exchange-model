@@ -1,6 +1,6 @@
 package com.StockExchangeModel.StockExchange;
 
-import com.StockExchangeModel.StockExchange.Company.PubliclyListedCompany;
+import com.StockExchangeModel.StockExchange.Company.Company;
 import com.StockExchangeModel.StockExchange.Order.Order;
 import com.StockExchangeModel.StockExchange.Order.Transaction;
 import com.StockExchangeModel.StockExchange.Order.Type;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class StockExchange {
     String name;
-    ArrayList<PubliclyListedCompany> publiclyListedCompanies;
+    ArrayList<Company> companies;
     ArrayList<Trader> traders;
     ArrayList<Order> orders;
 
@@ -19,18 +19,18 @@ public class StockExchange {
     }
 
     public StockExchange(String name) {
-        this.publiclyListedCompanies = new ArrayList<>();
+        this.companies = new ArrayList<>();
         this.traders = new ArrayList<>();
         this.orders = new ArrayList<>();
         this.name = name;
     }
 
-    public ArrayList<PubliclyListedCompany> getPubliclyListedCompanies() {
-        return publiclyListedCompanies;
+    public ArrayList<Company> getCompanies() {
+        return companies;
     }
 
-    public PubliclyListedCompany getPubliclyListedCompany(String ticker) {
-        for(PubliclyListedCompany c: publiclyListedCompanies) {
+    public Company getCompany(String ticker) {
+        for(Company c: companies) {
             if(c.getStock().getTicker().compareTo(ticker.toUpperCase()) == 0) {
                 return c;
             }
@@ -38,32 +38,31 @@ public class StockExchange {
         return null;
     }
 
-    public ArrayList<PubliclyListedCompany> getPubliclyListedCompaniesByCategory(String c) {
-        ArrayList<PubliclyListedCompany> ret = new ArrayList<>();
-        for(PubliclyListedCompany plc : publiclyListedCompanies) {
-            if(plc.getCategory().compareTo(c) == 0) {
-               ret.add(plc);
+    public ArrayList<Company> getCompaniesByCategory(String s) {
+        ArrayList<Company> ret = new ArrayList<>();
+        for(Company c : companies) {
+            if(c.getCategory().compareTo(s) == 0) {
+               ret.add(c);
             }
         }
         return ret;
     }
 
-    public boolean addPubliclyListedCompany(PubliclyListedCompany c) {
-        if(getPubliclyListedCompany(c.getStock().getTicker()) == null) {
-            return publiclyListedCompanies.add(c);
+    public boolean addCompany(Company c) {
+        if(getCompany(c.getStock().getTicker()) == null) {
+            return companies.add(c);
         }
         return false;
     }
 
-    public boolean deletePubliclyListedCompany(PubliclyListedCompany c) {
-        System.out.println("Deleted " + c.toString());
-        return publiclyListedCompanies.remove(c);
+    public boolean deleteCompany(Company c) {
+        return companies.remove(c);
     }
 
-    public boolean deletePubliclyListedCompany(String ticker) {
-        PubliclyListedCompany c = getPubliclyListedCompany(ticker);
+    public boolean deleteCompany(String ticker) {
+        Company c = getCompany(ticker);
         if(c != null) {
-            return deletePubliclyListedCompany(c);
+            return deleteCompany(c);
         }
         return false;
     }
@@ -106,7 +105,7 @@ public class StockExchange {
     public String toString() {
         return "StockExchange{" +
                 "name='" + name + '\'' +
-                ", publiclyListedCompanies=" + publiclyListedCompanies.toString() +
+                ", publiclyListedCompanies=" + companies.toString() +
                 ", orders=" + orders.toString() +
                 '}';
     }
@@ -117,8 +116,12 @@ public class StockExchange {
 
     public boolean stageOrder(Order o) {
         // generic check for both types of orders
-        if (o.getRate() < o.getStock().getLowerCircuit() || o.getRate() > o.getStock().getUpperCircuit()) {
-            System.out.println("Rejected " + o.toStringStatus("REJECTED:CIRCUIT_RATE_VIOLATION"));
+        if (o.getRate() < o.getStock().getLowerCircuit()) {
+            System.out.println("Rejected " + o.toStringStatus("REJECTED:LOWER_CIRCUIT_VIOLATION"));
+            return false;
+        }
+        if(o.getRate() > o.getStock().getUpperCircuit()) {
+            System.out.println("Rejected " + o.toStringStatus("REJECTED:UPPER_CIRCUIT_VIOLATION"));
             return false;
         }
 
@@ -183,5 +186,9 @@ public class StockExchange {
         }
 
         return successfulTransactions;
+    }
+
+    public String getName() {
+        return name;
     }
 }

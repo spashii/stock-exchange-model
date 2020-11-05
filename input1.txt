@@ -1,0 +1,2 @@
+company show_all
+company show_category pharma

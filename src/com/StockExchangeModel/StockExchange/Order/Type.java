@@ -3,6 +3,44 @@ package com.StockExchangeModel.StockExchange.Order;
 import java.util.Objects;
 
 public class Type {
+    public enum TypeEnum{
+        BUY,
+        SELL,
+        TRANSACTION,
+        NULL
+    }
+
+    static String getStringFromType(TypeEnum type) {
+        switch (type) {
+            case BUY:
+                return "BUY";
+            case SELL:
+                return "SELL";
+            case TRANSACTION:
+                return "TRANSACTION";
+            default:
+                return "NULL";
+        }
+    }
+
+    static TypeEnum getTypeFromString(String type) {
+        String s = type.toUpperCase().strip();
+        if(s.length() > 0) {
+            switch (s) {
+                case "BUY":
+                    return TypeEnum.BUY;
+                case "SELL":
+                    return TypeEnum.SELL;
+                case "TRANSACTION":
+                    return TypeEnum.TRANSACTION;
+                case "NULL":
+                default:
+                    return TypeEnum.NULL;
+            }
+        }
+        return TypeEnum.NULL;
+    }
+
     TypeEnum type;
 
     Type(String type) {
@@ -40,39 +78,4 @@ public class Type {
                 "type=" + getTypeString() +
                 '}';
     }
-
-    public enum TypeEnum{
-        BUY,
-        SELL,
-        TRANSACTION,
-        UNKNOWN
-    }
-
-    static String getStringFromType(TypeEnum type) {
-        switch (type) {
-            case BUY:
-                return "BUY";
-            case SELL:
-                return "SELL";
-            case TRANSACTION:
-                return "TRANSACTION";
-            default:
-                return "UNKNOWN";
-        }
-    }
-
-    static TypeEnum getTypeFromString(String type) {
-        if (type.toUpperCase().compareTo("BUY") == 0) {
-            return TypeEnum.BUY;
-        }
-        else if (type.toUpperCase().compareTo("SELL") == 0) {
-            return TypeEnum.SELL;
-        }
-        else if (type.toUpperCase().compareTo("TRANSACTION") == 0) {
-            return TypeEnum.TRANSACTION;
-        }
-        else
-            return TypeEnum.UNKNOWN;
-    }
-
 }

@@ -69,6 +69,10 @@ public class Trader {
         return funds;
     }
 
+    public HashMap<Stock, Integer> getHoldings() {
+        return holdings;
+    }
+
     public boolean putHolding(Stock s, int q) {
         if(holdings.getOrDefault(s, 0) + q < 0) {
             return false;

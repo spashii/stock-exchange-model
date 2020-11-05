@@ -24,17 +24,35 @@ public class Transaction extends Order {
                 if(seller.putHolding(stock, -1*quantity)) {
                     buyer.putHolding(stock, quantity);
                     seller.putFunds(quantity * rate);
+                    // set low and high price of stock, if applicable
                     if(stock.getLowPrice() > rate) {
                         stock.setLowPrice(rate);
                     }
                     if(stock.getHighPrice() < rate) {
                         stock.setHighPrice(rate);
                     }
+                    // remove stock holding if quantity held is 0
+                    if(seller.getHolding(stock) == 0) {
+                        seller.getHoldings().remove(stock);
+                    }
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "seller_id=" + seller.getId() +
+                ", seller_name='" + seller.getName() + '\'' +
+                ", buyer_id=" + buyer.getId() +
+                ", buyer_name='" + buyer.getName() + '\'' +
+                ", stock='" + stock.getTicker() + '\'' +
+                ", quantity=" + quantity +
+                ", rate=" + rate +
+                '}';
     }
 
     public Trader getTrader() {
@@ -58,18 +76,5 @@ public class Transaction extends Order {
 
     public void setBuyer(Trader buyer) {
         this.buyer = buyer;
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "seller_id=" + seller.getId() +
-                ", seller_name='" + seller.getName() + '\'' +
-                ", buyer_id=" + buyer.getId() +
-                ", buyer_name='" + buyer.getName() + '\'' +
-                ", stock='" + stock.getTicker() + '\'' +
-                ", quantity=" + quantity +
-                ", rate=" + rate +
-                '}';
     }
 }
