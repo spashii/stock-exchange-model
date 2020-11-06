@@ -13,15 +13,14 @@ public class Trader {
     HashMap<Stock, Integer> holdings; // stock, quantity
 
     public Trader(String name, double funds, HashMap<Stock, Integer> holdings) {
-        this.name = name;
+        this.name = name.toUpperCase();
         this.id = ++count;
         this.funds = funds;
-        this.holdings = holdings;
-        System.out.println("Added " + this.toString());
+        this.holdings = new HashMap<>(holdings);
     }
 
     public Trader(String name, double funds) {
-        this.name = name;
+        this.name = name.toUpperCase();
         this.id = ++count;
         this.funds = funds;
         this.holdings = new HashMap<>();
@@ -71,6 +70,10 @@ public class Trader {
 
     public HashMap<Stock, Integer> getHoldings() {
         return holdings;
+    }
+
+    public void setHoldings(HashMap<Stock, Integer> holdings) {
+        this.holdings = holdings;
     }
 
     public boolean putHolding(Stock s, int q) {

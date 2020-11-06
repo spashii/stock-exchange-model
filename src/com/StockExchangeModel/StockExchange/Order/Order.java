@@ -36,6 +36,7 @@ public class Order {
                 "trader_id=" + getTrader().getId() +
                 ", trader_name='" + getTrader().getName() + '\'' +
                 ", stock='" + stock.getTicker() + '\'' +
+                ", type='" + type.getTypeString() + '\'' +
                 ", quantity=" + quantity +
                 ", rate=" + rate +
                 '}';
@@ -47,6 +48,7 @@ public class Order {
                 ", trader_id=" + getTrader().getId() +
                 ", trader_name='" + getTrader().getName() + '\'' +
                 ", stock='" + stock.getTicker() + '\'' +
+                ", type='" + type.getTypeString() + '\'' +
                 ", quantity=" + quantity +
                 ", rate=" + rate +
                 '}';

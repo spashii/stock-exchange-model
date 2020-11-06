@@ -18,7 +18,7 @@ public class CompanyActionHandler extends ActionHandler {
             case SHOW:
                 if (arguments.length == 1) {
                     String ticker = arguments[0];
-                    ret.add("* SHOWING COMPANY *");
+//                    ret.add("* SHOWING COMPANY *");
                     Company c = context.getCompany(ticker);
                     if (c != null) {
                         ret.add(c.toString());
@@ -68,23 +68,21 @@ public class CompanyActionHandler extends ActionHandler {
                     double closePrice = Double.parseDouble(arguments[4]);
                     double lowPrice = Double.parseDouble(arguments[5]);
                     double highPrice = Double.parseDouble(arguments[6]);
-                    ret.add("* ADDING COMPANY *");
+//                    ret.add("* ADDING COMPANY *");
                     Company c = new Company(name, ticker, category, openPrice, closePrice, lowPrice, highPrice);
                     if(context.addCompany(c)) {
                         ret.add("Added " + c.toString());
-                    } else {
-                        ret.add("Failed to add company '" + ticker + "'");
-                        ret.add("Usage: COMPANY ADD name? ticker? category? open_price? close_price? low_price? high_price?");
+                        break;
                     }
-                } else {
-                    ret.add("Usage: COMPANY ADD name? ticker? category? open_price? close_price? low_price? high_price?");
+                    ret.add("Failed to add company '" + ticker + "'");
                 }
+                ret.add("Usage: COMPANY ADD name? ticker? category? open_price? close_price? low_price? high_price?");
                 break;
 
             case DELETE:
                 if (arguments.length == 1) {
                     String ticker = arguments[0];
-                    ret.add("* DELETING COMPANY *");
+//                    ret.add("* DELETING COMPANY *");
                     Company c = context.getCompany(ticker);
                     if (c != null) {
                         if(context.deleteCompany(ticker)){
@@ -102,11 +100,11 @@ public class CompanyActionHandler extends ActionHandler {
 
             default:
                 ret.add("Usage:");
-                ret.add("COMPANY SHOW ticker?");
-                ret.add("COMPANY SHOW_ALL");
-                ret.add("COMPANY SHOW_CATEGORY category?");
-                ret.add("COMPANY ADD name? ticker? category? open_price? close_price? low_price? high_price?");
-                ret.add("COMPANY DELETE ticker?");
+                ret.add("  COMPANY SHOW ticker?");
+                ret.add("  COMPANY SHOW_ALL");
+                ret.add("  COMPANY SHOW_CATEGORY category?");
+                ret.add("  COMPANY ADD name? ticker? category? open_price? close_price? low_price? high_price?");
+                ret.add("  COMPANY DELETE ticker?");
         }
         return ret.toArray(new String[0]);
     }

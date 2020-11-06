@@ -82,14 +82,12 @@ public class StockExchange {
 
     public boolean addTrader(Trader t) {
         if(getTrader(t.getId()) == null) {
-            traders.add(t);
-            System.out.println("Added " + t.toString());
+            return traders.add(t);
         }
         return false;
     }
 
     public boolean deleteTrader(Trader t) {
-        System.out.println("Deleted " + t.toString());
         return traders.remove(t);
     }
 
@@ -114,35 +112,30 @@ public class StockExchange {
         return orders;
     }
 
-    public boolean stageOrder(Order o) {
+    public String stageOrder(Order o) {
         // generic check for both types of orders
         if (o.getRate() < o.getStock().getLowerCircuit()) {
-            System.out.println("Rejected " + o.toStringStatus("REJECTED:LOWER_CIRCUIT_VIOLATION"));
-            return false;
+            return ("Rejected " + o.toStringStatus("REJECTED:LOWER_CIRCUIT_VIOLATION"));
         }
         if(o.getRate() > o.getStock().getUpperCircuit()) {
-            System.out.println("Rejected " + o.toStringStatus("REJECTED:UPPER_CIRCUIT_VIOLATION"));
-            return false;
+            return ("Rejected " + o.toStringStatus("REJECTED:UPPER_CIRCUIT_VIOLATION"));
         }
 
         // specific checks for different types of orders
         if (o.getType().getTypeEnum() == Type.TypeEnum.BUY) {
             if (o.getTrader().getFunds() - (o.getQuantity() * o.getRate()) < 0) {
-                System.out.println("Rejected " + o.toStringStatus("REJECTED:INSUFFICIENT_FUNDS"));
-                return false;
+                return ("Rejected " + o.toStringStatus("REJECTED:INSUFFICIENT_FUNDS"));
             } else {
                 orders.add(o);
-                System.out.println("Staged " + o.toStringStatus("STAGED:BUY"));
-                return true;
+                return ("Staged " + o.toStringStatus("STAGED:BUY"));
             }
         } else {
             if(o.getTrader().getHolding(o.getStock()) < o.getQuantity()) {
-                return false;
+                return ("Rejected " + o.toStringStatus("REJECTED:INSUFFICIENT_HOLDING"));
             }
             else {
                 orders.add(o);
-                System.out.println("Staged " + o.toStringStatus("STAGED:SELL"));
-                return true;
+                return ("Staged " + o.toStringStatus("STAGED:SELL"));
             }
         }
     }
@@ -177,7 +170,6 @@ public class StockExchange {
             if (highestBid.getStock() != null) {
                 Transaction transaction = new Transaction(sellOrder, sellOrder.getTrader(), highestBid.getTrader());
                 if(transaction.execute()) {
-                    System.out.println("Executed " + transaction.toString());
                     orders.remove(sellOrder);
                     orders.remove(highestBid);
                     successfulTransactions.add(transaction);

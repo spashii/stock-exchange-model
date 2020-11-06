@@ -2,9 +2,6 @@ package com.StockExchangeModel.StockExchange.Interpreter;
 
 import com.StockExchangeModel.StockExchange.StockExchange;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public abstract class ActionHandler {
     public enum ActionType {
         SHOW,
@@ -13,7 +10,7 @@ public abstract class ActionHandler {
         ADD,
         DELETE,
         STAGE,
-        EXECUTE,
+        EXECUTE_ALL,
         NULL
     }
 
@@ -31,7 +28,7 @@ public abstract class ActionHandler {
                 return "DELETE";
             case STAGE:
                 return "STAGE";
-            case EXECUTE:
+            case EXECUTE_ALL:
                 return "EXECUTE";
             case NULL:
             default:
@@ -56,7 +53,7 @@ public abstract class ActionHandler {
                case "STAGE":
                    return ActionType.STAGE;
                case "EXECUTE":
-                   return ActionType.EXECUTE;
+                   return ActionType.EXECUTE_ALL;
                default:
                    return ActionType.NULL;
            }

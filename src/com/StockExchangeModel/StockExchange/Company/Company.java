@@ -5,7 +5,7 @@ public class Company {
     int categoryIndex;
     Stock stock;
 
-    static String[] categoryList = {"Miscellaneous", "Pharma", "Consumer Goods", "Automobiles", "IT", "Infrastructure", "Finance", "Banking"};
+    static String[] categoryList = {"MISCELLANEOUS", "PHARMA", "CONSUMER GOODS", "AUTOMOBILES", "IT", "INFRASTRUCTURE", "FINANCE", "BANKING"};
 
     static int getCategoryIndex(String c) {
         for(int i = 1; i<categoryList.length; i++) {
@@ -21,8 +21,8 @@ public class Company {
     }
 
     public Company(String name, String ticker, String category, double openPrice, double closePrice, double lowPrice, double highPrice) {
-        this.name = name;
-        this.categoryIndex = getCategoryIndex(category);
+        this.name = name.toUpperCase();
+        this.categoryIndex = getCategoryIndex(category.toUpperCase());
         this.stock = new Stock(ticker, openPrice, closePrice, lowPrice, highPrice);
     }
 
