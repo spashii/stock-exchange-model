@@ -37,7 +37,7 @@ public abstract class ActionHandler {
     }
 
     public static ActionType getActionType(String actionString) {
-        String s = actionString.toUpperCase().strip();
+        String s = actionString.toUpperCase().trim();
         if (s.length() > 0) {
             switch (s) {
                 case "SHOW":

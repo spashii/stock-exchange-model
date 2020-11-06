@@ -24,7 +24,7 @@ public class Type {
     }
 
     static TypeEnum getTypeFromString(String type) {
-        String s = type.toUpperCase().strip();
+        String s = type.toUpperCase().trim();
         if (s.length() > 0) {
             switch (s) {
                 case "BUY":
