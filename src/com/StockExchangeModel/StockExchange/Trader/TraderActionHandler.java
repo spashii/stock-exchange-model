@@ -50,7 +50,7 @@ public class TraderActionHandler extends ActionHandler {
 //                    ret.add("* ADDING TRADER *");
                     Trader t = new Trader(name, funds);
 
-                    if(context.addTrader(t)) {
+                    if (context.addTrader(t)) {
                         ret.add("Added " + t.toString());
                         break;
                     } else {
@@ -65,15 +65,15 @@ public class TraderActionHandler extends ActionHandler {
 
                     StringBuilder holdingsStringBuilder = new StringBuilder();
                     for (int i = 2; i < arguments.length; i++) {
-                       holdingsStringBuilder.append(arguments[i]);
-                       holdingsStringBuilder.append(" ");
+                        holdingsStringBuilder.append(arguments[i]);
+                        holdingsStringBuilder.append(" ");
                     }
                     String holdingsString = holdingsStringBuilder.toString();
                     holdingsString = holdingsString.trim().toUpperCase().replaceAll("[^&\\w]", " ");
                     String[] words = holdingsString.trim().split("\\s+");
 
                     if (words.length >= 2 && words.length % 2 == 0) {
-                        for (int i = 0; i < words.length; i+=2) {
+                        for (int i = 0; i < words.length; i += 2) {
                             Company c = context.getCompany(words[i]);
                             if (c != null) {
                                 boolean temp = t.putHolding(context.getCompany(words[i]).getStock(), Integer.parseInt(words[i + 1]));
@@ -81,10 +81,10 @@ public class TraderActionHandler extends ActionHandler {
                                     continue;
                                 }
                             }
-                            ret.add("Failed to add holding {" + words[i] + ": " + words[i+1] + "}");
+                            ret.add("Failed to add holding {" + words[i] + ": " + words[i + 1] + "}");
                         }
 
-                        if(context.addTrader(t)) {
+                        if (context.addTrader(t)) {
                             ret.add("Added " + t.toString());
                             break;
                         } else {
@@ -101,7 +101,7 @@ public class TraderActionHandler extends ActionHandler {
 //                    ret.add("* DELETING TRADER *");
                     Trader t = context.getTrader(id);
                     if (t != null) {
-                        if(context.deleteTrader(t)){
+                        if (context.deleteTrader(t)) {
                             ret.add("Deleted " + t.toString());
                         } else {
                             ret.add("Failed to delete trader '" + id + "'");
@@ -118,7 +118,7 @@ public class TraderActionHandler extends ActionHandler {
                 ret.add("Usage:");
                 ret.add("  TRADER SHOW id?");
                 ret.add("  TRADER SHOW_ALL");
-                ret.add("  TRADER ADD name? funds? holdings(format:\"{ticker:quantity, ticker2:quantity2}\")?");
+                ret.add("  TRADER ADD name? funds? holdings(format:\"{ticker:quantity, ticker2:quantity2, ...}\")?");
                 ret.add("  TRADER DELETE id?");
         }
         return ret.toArray(new String[0]);

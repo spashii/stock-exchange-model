@@ -61,7 +61,7 @@ public class Trader {
     }
 
     public double putFunds(double funds) {
-        if(this.funds + funds < 0) {
+        if (this.funds + funds < 0) {
             return 0.0;
         }
         setFunds(this.funds + funds);
@@ -77,7 +77,7 @@ public class Trader {
     }
 
     public boolean putHolding(Stock s, int q) {
-        if(holdings.getOrDefault(s, 0) + q < 0) {
+        if (holdings.getOrDefault(s, 0) + q < 0) {
             return false;
         }
         holdings.put(s, holdings.getOrDefault(s, 0) + q);
@@ -89,15 +89,15 @@ public class Trader {
     }
 
     public String toStringHoldings() {
-        if(holdings.size() == 0) {
+        if (holdings.size() == 0) {
             return "{}";
         }
         StringBuilder ret = new StringBuilder("{");
-        for(Stock s: holdings.keySet()) {
-           ret.append("{stock='" + s.getTicker() + "', quantity=" + holdings.get(s) + "}, ");
+        for (Stock s : holdings.keySet()) {
+            ret.append("{stock='" + s.getTicker() + "', quantity=" + holdings.get(s) + "}, ");
         }
-        ret.deleteCharAt(ret.length()-1);
-        ret.deleteCharAt(ret.length()-1);
+        ret.deleteCharAt(ret.length() - 1);
+        ret.deleteCharAt(ret.length() - 1);
         ret.append("}");
         return ret.toString();
     }

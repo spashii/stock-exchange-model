@@ -15,7 +15,7 @@ order stage 3 M&M  BUY  10  580
 order stage 4 SBI  SELL 25  195
 order stage 2 INFY BUY  5   2190
 order show_all
-order execute
+order execute_all
 company show_category pharma
 company delete TCS
 trader  delete 1

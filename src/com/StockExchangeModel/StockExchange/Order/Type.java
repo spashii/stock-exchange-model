@@ -3,7 +3,7 @@ package com.StockExchangeModel.StockExchange.Order;
 import java.util.Objects;
 
 public class Type {
-    public enum TypeEnum{
+    public enum TypeEnum {
         BUY,
         SELL,
         TRANSACTION,
@@ -25,7 +25,7 @@ public class Type {
 
     static TypeEnum getTypeFromString(String type) {
         String s = type.toUpperCase().strip();
-        if(s.length() > 0) {
+        if (s.length() > 0) {
             switch (s) {
                 case "BUY":
                     return TypeEnum.BUY;

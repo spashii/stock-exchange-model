@@ -33,7 +33,7 @@ public class OrderActionHandler extends ActionHandler {
                 ret.add("* EXECUTING ORDERS *");
                 ArrayList<Transaction> transactions = context.executeOrders();
                 if (transactions != null && transactions.size() > 0) {
-                    for(Transaction t : transactions) {
+                    for (Transaction t : transactions) {
                         ret.add("Executed " + t.toString());
                     }
                 }

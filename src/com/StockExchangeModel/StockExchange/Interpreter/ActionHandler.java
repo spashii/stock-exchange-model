@@ -29,7 +29,7 @@ public abstract class ActionHandler {
             case STAGE:
                 return "STAGE";
             case EXECUTE_ALL:
-                return "EXECUTE";
+                return "EXECUTE_ALL";
             case NULL:
             default:
                 return "NULL";
@@ -37,28 +37,28 @@ public abstract class ActionHandler {
     }
 
     public static ActionType getActionType(String actionString) {
-       String s = actionString.toUpperCase().strip();
-       if (s.length() > 0) {
-           switch (s) {
-               case "SHOW":
-                   return ActionType.SHOW;
-               case "SHOW_ALL":
-                   return ActionType.SHOW_ALL;
-               case "SHOW_CATEGORY":
-                   return ActionType.SHOW_CATEGORY;
-               case "ADD":
-                   return ActionType.ADD;
-               case "DELETE":
-                   return ActionType.DELETE;
-               case "STAGE":
-                   return ActionType.STAGE;
-               case "EXECUTE":
-                   return ActionType.EXECUTE_ALL;
-               default:
-                   return ActionType.NULL;
-           }
-       }
-       return ActionType.NULL;
+        String s = actionString.toUpperCase().strip();
+        if (s.length() > 0) {
+            switch (s) {
+                case "SHOW":
+                    return ActionType.SHOW;
+                case "SHOW_ALL":
+                    return ActionType.SHOW_ALL;
+                case "SHOW_CATEGORY":
+                    return ActionType.SHOW_CATEGORY;
+                case "ADD":
+                    return ActionType.ADD;
+                case "DELETE":
+                    return ActionType.DELETE;
+                case "STAGE":
+                    return ActionType.STAGE;
+                case "EXECUTE_ALL":
+                    return ActionType.EXECUTE_ALL;
+                default:
+                    return ActionType.NULL;
+            }
+        }
+        return ActionType.NULL;
     }
 
     public StockExchange context;

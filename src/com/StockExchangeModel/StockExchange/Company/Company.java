@@ -8,7 +8,7 @@ public class Company {
     static String[] categoryList = {"MISCELLANEOUS", "PHARMA", "CONSUMER GOODS", "AUTOMOBILES", "IT", "INFRASTRUCTURE", "FINANCE", "BANKING"};
 
     static int getCategoryIndex(String c) {
-        for(int i = 1; i<categoryList.length; i++) {
+        for (int i = 1; i < categoryList.length; i++) {
             if (categoryList[i].compareTo(c) == 0) {
                 return i;
             }

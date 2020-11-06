@@ -26,7 +26,7 @@ public class Interpreter extends Parser {
     }
 
     public String[] interpret(String[] parsed) {
-        if(parsed != null && parsed.length >= 1) {
+        if (parsed != null && parsed.length >= 1) {
             for (int i = 0; i < parsed.length; i++) {
                 parsed[i] = parsed[i].toUpperCase();
             }
@@ -80,7 +80,7 @@ public class Interpreter extends Parser {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
-                    ret.addAll(Arrays.asList(interpret(parseLine(line))));
+                ret.addAll(Arrays.asList(interpret(parseLine(line))));
             }
         } catch (Exception e) {
             ret.add(e.getMessage());
@@ -88,15 +88,15 @@ public class Interpreter extends Parser {
         return ret.toArray(new String[0]);
     }
 
-    public void startSession(String prompt){
+    public void startSession(String prompt) {
         Scanner s = new Scanner(System.in);
-        while(true) {
+        while (true) {
             System.out.print(prompt + " ");
             String input = s.nextLine();
             String[] parsed = parseLine(input);
-            if(parsed.length >= 1 && (parsed[0].compareTo("EXIT") == 0
-                                   || parsed[0].compareTo("QUIT") == 0
-                                   || parsed[0].compareTo("Q") == 0) ){
+            if (parsed.length >= 1 && (parsed[0].compareTo("EXIT") == 0
+                    || parsed[0].compareTo("QUIT") == 0
+                    || parsed[0].compareTo("Q") == 0)) {
                 return;
             }
             String[] interpreted = interpret(parsed);
@@ -109,7 +109,7 @@ public class Interpreter extends Parser {
     }
 
     public static void printInterpretedResults(String[] results) {
-        for ( String s : results){
+        for (String s : results) {
             System.out.println(s);
         }
     }

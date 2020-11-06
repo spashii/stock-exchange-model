@@ -18,21 +18,21 @@ public class Transaction extends Order {
 
     public boolean execute() {
         // seller's ask price is the final price at which the transaction takes place
-        if(seller != null && buyer != null) {
+        if (seller != null && buyer != null) {
             double releasedFunds = -1 * buyer.putFunds(-1 * quantity * rate);
-            if(releasedFunds != 0.0) {
-                if(seller.putHolding(stock, -1*quantity)) {
+            if (releasedFunds != 0.0) {
+                if (seller.putHolding(stock, -1 * quantity)) {
                     buyer.putHolding(stock, quantity);
                     seller.putFunds(quantity * rate);
                     // set low and high price of stock, if applicable
-                    if(stock.getLowPrice() > rate) {
+                    if (stock.getLowPrice() > rate) {
                         stock.setLowPrice(rate);
                     }
-                    if(stock.getHighPrice() < rate) {
+                    if (stock.getHighPrice() < rate) {
                         stock.setHighPrice(rate);
                     }
                     // remove stock holding if quantity held is 0
-                    if(seller.getHolding(stock) == 0) {
+                    if (seller.getHolding(stock) == 0) {
                         seller.getHoldings().remove(stock);
                     }
                     return true;

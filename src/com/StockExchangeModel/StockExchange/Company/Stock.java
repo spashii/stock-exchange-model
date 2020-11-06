@@ -49,11 +49,11 @@ public class Stock {
         this.ticker = ticker.toUpperCase();
     }
 
-    public double getLowerCircuit(){
+    public double getLowerCircuit() {
         return 0.9 * closePrice;
     }
 
-    public double getUpperCircuit(){
+    public double getUpperCircuit() {
         return 1.1 * closePrice;
     }
 

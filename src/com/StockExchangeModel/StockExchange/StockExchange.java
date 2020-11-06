@@ -22,7 +22,7 @@ public class StockExchange {
         this.companies = new ArrayList<>();
         this.traders = new ArrayList<>();
         this.orders = new ArrayList<>();
-        this.name = name;
+        this.name = name.trim().toUpperCase();
     }
 
     public ArrayList<Company> getCompanies() {
@@ -30,8 +30,8 @@ public class StockExchange {
     }
 
     public Company getCompany(String ticker) {
-        for(Company c: companies) {
-            if(c.getStock().getTicker().compareTo(ticker.toUpperCase()) == 0) {
+        for (Company c : companies) {
+            if (c.getStock().getTicker().compareTo(ticker.toUpperCase()) == 0) {
                 return c;
             }
         }
@@ -40,16 +40,16 @@ public class StockExchange {
 
     public ArrayList<Company> getCompaniesByCategory(String s) {
         ArrayList<Company> ret = new ArrayList<>();
-        for(Company c : companies) {
-            if(c.getCategory().compareTo(s) == 0) {
-               ret.add(c);
+        for (Company c : companies) {
+            if (c.getCategory().compareTo(s) == 0) {
+                ret.add(c);
             }
         }
         return ret;
     }
 
     public boolean addCompany(Company c) {
-        if(getCompany(c.getStock().getTicker()) == null) {
+        if (getCompany(c.getStock().getTicker()) == null) {
             return companies.add(c);
         }
         return false;
@@ -61,7 +61,7 @@ public class StockExchange {
 
     public boolean deleteCompany(String ticker) {
         Company c = getCompany(ticker);
-        if(c != null) {
+        if (c != null) {
             return deleteCompany(c);
         }
         return false;
@@ -72,8 +72,8 @@ public class StockExchange {
     }
 
     public Trader getTrader(long id) {
-        for(Trader t: traders) {
-            if(t.getId() == id) {
+        for (Trader t : traders) {
+            if (t.getId() == id) {
                 return t;
             }
         }
@@ -81,7 +81,7 @@ public class StockExchange {
     }
 
     public boolean addTrader(Trader t) {
-        if(getTrader(t.getId()) == null) {
+        if (getTrader(t.getId()) == null) {
             return traders.add(t);
         }
         return false;
@@ -93,7 +93,7 @@ public class StockExchange {
 
     public boolean deleteTrader(long id) {
         Trader t = getTrader(id);
-        if(t != null) {
+        if (t != null) {
             return deleteTrader(t);
         }
         return false;
@@ -117,7 +117,7 @@ public class StockExchange {
         if (o.getRate() < o.getStock().getLowerCircuit()) {
             return ("Rejected " + o.toStringStatus("REJECTED:LOWER_CIRCUIT_VIOLATION"));
         }
-        if(o.getRate() > o.getStock().getUpperCircuit()) {
+        if (o.getRate() > o.getStock().getUpperCircuit()) {
             return ("Rejected " + o.toStringStatus("REJECTED:UPPER_CIRCUIT_VIOLATION"));
         }
 
@@ -130,10 +130,9 @@ public class StockExchange {
                 return ("Staged " + o.toStringStatus("STAGED:BUY"));
             }
         } else {
-            if(o.getTrader().getHolding(o.getStock()) < o.getQuantity()) {
+            if (o.getTrader().getHolding(o.getStock()) < o.getQuantity()) {
                 return ("Rejected " + o.toStringStatus("REJECTED:INSUFFICIENT_HOLDING"));
-            }
-            else {
+            } else {
                 orders.add(o);
                 return ("Staged " + o.toStringStatus("STAGED:SELL"));
             }
@@ -146,21 +145,21 @@ public class StockExchange {
         ArrayList<Order> buyOrders = new ArrayList<>();
         ArrayList<Order> sellOrders = new ArrayList<>();
 
-        for(Order o: orders) {
-            if(o.getType().getTypeEnum() == Type.TypeEnum.BUY) {
+        for (Order o : orders) {
+            if (o.getType().getTypeEnum() == Type.TypeEnum.BUY) {
                 buyOrders.add(o);
             } else {
                 sellOrders.add(o);
             }
         }
 
-        for(Order sellOrder: sellOrders) {
+        for (Order sellOrder : sellOrders) {
             Order highestBid = new Order();
             highestBid.setRate(sellOrder.getRate());
             highestBid.setQuantity(sellOrder.getQuantity());
 
-            for(Order buyOrder: buyOrders) {
-                if(sellOrder.getStock().getTicker().compareTo(buyOrder.getStock().getTicker()) == 0) {
+            for (Order buyOrder : buyOrders) {
+                if (sellOrder.getStock().getTicker().compareTo(buyOrder.getStock().getTicker()) == 0) {
                     if (buyOrder.getRate() >= highestBid.getRate() && buyOrder.getQuantity() >= sellOrder.getQuantity()) {
                         highestBid = buyOrder;
                     }
@@ -169,7 +168,7 @@ public class StockExchange {
 
             if (highestBid.getStock() != null) {
                 Transaction transaction = new Transaction(sellOrder, sellOrder.getTrader(), highestBid.getTrader());
-                if(transaction.execute()) {
+                if (transaction.execute()) {
                     orders.remove(sellOrder);
                     orders.remove(highestBid);
                     successfulTransactions.add(transaction);

@@ -70,7 +70,7 @@ public class CompanyActionHandler extends ActionHandler {
                     double highPrice = Double.parseDouble(arguments[6]);
 //                    ret.add("* ADDING COMPANY *");
                     Company c = new Company(name, ticker, category, openPrice, closePrice, lowPrice, highPrice);
-                    if(context.addCompany(c)) {
+                    if (context.addCompany(c)) {
                         ret.add("Added " + c.toString());
                         break;
                     }
@@ -85,7 +85,7 @@ public class CompanyActionHandler extends ActionHandler {
 //                    ret.add("* DELETING COMPANY *");
                     Company c = context.getCompany(ticker);
                     if (c != null) {
-                        if(context.deleteCompany(ticker)){
+                        if (context.deleteCompany(ticker)) {
                             ret.add("Deleted " + c.toString());
                         } else {
                             ret.add("Failed to delete company '" + ticker + "'");
