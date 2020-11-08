@@ -1,0 +1,205 @@
+@startuml
+
+title __StockExchangeModel's Class Diagram__\n
+
+  namespace com.StockExchangeModel {
+    class com.StockExchangeModel.Demo {
+        {static} + demo()
+    }
+    class com.StockExchangeModel.Main {
+        {static} + main()
+    }
+    namespace StockExchange {
+      class com.StockExchangeModel.StockExchange.StockExchange {
+          ~ companies : ArrayList<Company>
+          ~ name : String
+          ~ orders : ArrayList<Order>
+          ~ traders : ArrayList<Trader>
+          + StockExchange()
+          + addCompany()
+          + getCompany()
+          + getCompaniesByCategory()
+          + deleteCompany()
+          + deleteCompany()
+          + addTrader()
+          + getTrader()
+          + deleteTrader()
+          + deleteTrader()
+          + stageOrder()
+          + executeOrders()
+          + toString()
+          ~ StockExchange()
+      }
+      namespace Interpreter {
+        enum ActionType {
+          ADD
+          DELETE
+          EXECUTE_ALL
+          NULL
+          SHOW
+          SHOW_ALL
+          SHOW_CATEGORY
+          STAGE
+        }
+        class com.StockExchangeModel.StockExchange.Interpreter.Action {
+            + arguments : String[]
+            + Action()
+            + Action()
+        }
+        abstract class com.StockExchangeModel.StockExchange.Interpreter.ActionHandler {
+            + actionLeader : String
+            + ActionHandler()
+            {static} + getActionString()
+            {static} + getActionType()
+            + handleAction()
+        }
+        class com.StockExchangeModel.StockExchange.Interpreter.Interpreter {
+            + Interpreter()
+            + interpret()
+            + interpretFile()
+            {static} + printInterpretedResults()
+            + startSession()
+        }
+        class com.StockExchangeModel.StockExchange.Interpreter.Parser {
+            {static} + parseCSVLine()
+            {static} + parseDate()
+            {static} + parseLine()
+        }
+      }
+      namespace StockAnalyser {
+        class com.StockExchangeModel.StockExchange.StockAnalyser.AnalysableStock {
+            ~ date : Date
+            ~ lastPrice : double
+            ~ previousClosePrice : double
+            + AnalysableStock()
+            {static} + compare()
+            + compareTo()
+            + toString()
+        }
+        class com.StockExchangeModel.StockExchange.StockAnalyser.StockAnalyser {
+            ~ analysableStocks : ArrayList<AnalysableStock>
+            + StockAnalyser()
+            + addAnalysableStock()
+            + addAnalysableStocksFromCSV()
+            + analyse()
+            {static} + printAnalysedResults()
+        }
+      }
+      namespace Company {
+        class com.StockExchangeModel.StockExchange.Company.CompanyActionHandler {
+            + CompanyActionHandler()
+            + handleAction()
+        }
+        class com.StockExchangeModel.StockExchange.Company.Company {
+            ~ categoryIndex : int
+            {static} ~ categoryList : String[]
+            ~ name : String
+            + Company()
+            + getCategory()
+            + toString()
+            {static} ~ getCategoryIndex()
+        }
+        class com.StockExchangeModel.StockExchange.Company.Stock {
+            ~ closePrice : double
+            ~ highPrice : double
+            ~ lowPrice : double
+            ~ openPrice : double
+            ~ ticker : String
+            + Stock()
+            + equals()
+            + getLowerCircuit()
+            + getUpperCircuit()
+            + toString()
+        }
+      }
+      namespace Trader {
+        class com.StockExchangeModel.StockExchange.Trader.Trader {
+            {static} ~ count : long
+            ~ funds : double
+            ~ holdings : HashMap<Stock, Integer>
+            ~ id : long
+            ~ name : String
+            + Trader()
+            + Trader()
+            + getHolding()
+            + putFunds()
+            + putHolding()
+            + toString()
+            + toStringHoldings()
+        }
+        class com.StockExchangeModel.StockExchange.Trader.TraderActionHandler {
+            + TraderActionHandler()
+            + handleAction()
+        }
+      }
+      namespace Order {
+        class com.StockExchangeModel.StockExchange.Order.Order {
+            ~ quantity : int
+            ~ rate : double
+            + Order()
+            + Order()
+            + Order()
+            + getType()
+            + toString()
+            + toStringStatus()
+        }
+        class com.StockExchangeModel.StockExchange.Order.OrderActionHandler {
+            + OrderActionHandler()
+            + handleAction()
+        }
+        class com.StockExchangeModel.StockExchange.Order.Transaction {
+            + Transaction()
+            + execute()
+            + toString()
+        }
+        class com.StockExchangeModel.StockExchange.Order.Type {
+            + equals()
+            + getTypeEnum()
+            + getTypeString()
+            + hashCode()
+            + toString()
+            ~ Type()
+            ~ Type()
+            {static} ~ getStringFromType()
+            {static} ~ getTypeFromString()
+        }
+        enum TypeEnum {
+          BUY
+          NULL
+          SELL
+          TRANSACTION
+        }
+      }
+    }
+  }
+
+  com.StockExchangeModel.StockExchange.Company.Company o-- com.StockExchangeModel.StockExchange.Company.Stock : stock
+  com.StockExchangeModel.StockExchange.Company.CompanyActionHandler -up-|> com.StockExchangeModel.StockExchange.Interpreter.ActionHandler
+  com.StockExchangeModel.StockExchange.Interpreter.Action o-- com.StockExchangeModel.StockExchange.Interpreter.ActionHandler.ActionType : actionType
+  com.StockExchangeModel.StockExchange.Interpreter.ActionHandler o-- com.StockExchangeModel.StockExchange.StockExchange : context
+  com.StockExchangeModel.StockExchange.Interpreter.Interpreter -up-|> com.StockExchangeModel.StockExchange.Interpreter.Parser
+  com.StockExchangeModel.StockExchange.Interpreter.Interpreter o-- com.StockExchangeModel.StockExchange.Company.CompanyActionHandler : companyActionHandler
+  com.StockExchangeModel.StockExchange.Interpreter.Interpreter o-- com.StockExchangeModel.StockExchange.StockExchange : context
+  com.StockExchangeModel.StockExchange.Interpreter.Interpreter o-- com.StockExchangeModel.StockExchange.Order.OrderActionHandler : orderActionHandler
+  com.StockExchangeModel.StockExchange.Interpreter.Interpreter o-- com.StockExchangeModel.StockExchange.Trader.TraderActionHandler : traderActionHandler
+  com.StockExchangeModel.StockExchange.Order.Order o-- com.StockExchangeModel.StockExchange.Company.Stock : stock
+  com.StockExchangeModel.StockExchange.Order.Order o-- com.StockExchangeModel.StockExchange.Order.Type : type
+  com.StockExchangeModel.StockExchange.Order.Order o-- com.StockExchangeModel.StockExchange.Trader.Trader : trader
+  com.StockExchangeModel.StockExchange.Order.OrderActionHandler -up-|> com.StockExchangeModel.StockExchange.Interpreter.ActionHandler
+  com.StockExchangeModel.StockExchange.Order.Transaction -up-|> com.StockExchangeModel.StockExchange.Order.Order
+  com.StockExchangeModel.StockExchange.Order.Transaction o-- com.StockExchangeModel.StockExchange.Trader.Trader : buyer
+  com.StockExchangeModel.StockExchange.Order.Transaction o-- com.StockExchangeModel.StockExchange.Trader.Trader : seller
+  com.StockExchangeModel.StockExchange.Order.Type o-- com.StockExchangeModel.StockExchange.Order.Type.TypeEnum : type
+  com.StockExchangeModel.StockExchange.Order.Type +-down- com.StockExchangeModel.StockExchange.Order.Type.TypeEnum
+  com.StockExchangeModel.StockExchange.StockAnalyser.AnalysableStock .up.|> java.lang.Comparable
+  com.StockExchangeModel.StockExchange.StockAnalyser.AnalysableStock -up-|> com.StockExchangeModel.StockExchange.Company.Stock
+  com.StockExchangeModel.StockExchange.StockAnalyser.StockAnalyser -up-|> com.StockExchangeModel.StockExchange.Interpreter.Parser
+  com.StockExchangeModel.StockExchange.Trader.TraderActionHandler -up-|> com.StockExchangeModel.StockExchange.Interpreter.ActionHandler
+
+right footer
+
+Public getters and setters removed from diagram for conciseness
+Copyright Sameer Pashikanti, 2020
+endfooter
+
+@enduml
