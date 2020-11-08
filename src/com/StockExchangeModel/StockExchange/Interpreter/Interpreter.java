@@ -80,7 +80,10 @@ public class Interpreter extends Parser {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
-                ret.addAll(Arrays.asList(interpret(parseLine(line))));
+                String[] parsed = parseLine(line);
+                // ignoring empty line
+                if (parsed[0].compareTo("") != 0)
+                    ret.addAll(Arrays.asList(interpret(parsed)));
             }
         } catch (Exception e) {
             ret.add(e.getMessage());
