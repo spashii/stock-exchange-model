@@ -12,6 +12,7 @@ public class Demo {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter name of Stock Exchange: ");
         System.out.print(">> ");
+        System.out.println("");
         String stockExchangeName = scanner.nextLine().trim();
         StockExchange se = new StockExchange(stockExchangeName);
         Interpreter interpreter = new Interpreter(se);
@@ -36,12 +37,14 @@ public class Demo {
                     System.out.println(se.getName() + " INTERPRETER");
                     System.out.println("Type 'help' to check usages");
                     interpreter.startSession("$");
+                    System.out.println("");
                     break;
                 case 2:
                     System.out.println("");
                     System.out.println("Please enter input filename(use input_1.txt for demo):");
                     System.out.print(">> ");
                     String filename = scanner.next().trim();
+                    System.out.println("");
                     System.out.println(se.getName() + " FILE INTERPRETER");
                     Interpreter.printInterpretedResults(interpreter.interpretFile(filename));
                     System.out.println("");
@@ -54,12 +57,13 @@ public class Demo {
                     System.out.println(se.getName() + " FILE INTERPRETER");
                     StockAnalyser stockAnalyser = new StockAnalyser();
                     stockAnalyser.addAnalysableStocksFromCSV(filename2);
-                    for(AnalysableStock a: stockAnalyser.getAnalysableStocks()) {
+                    for (AnalysableStock a : stockAnalyser.getAnalysableStocks()) {
                         System.out.println("Loaded " + a.toString());
                     }
                     System.out.println("");
                     System.out.println("ANALYSIS RESULTS");
                     StockAnalyser.printAnalysedResults(stockAnalyser.analyse());
+                    System.out.println("");
                     break;
                 case 5:
                     break;
@@ -67,6 +71,6 @@ public class Demo {
                     System.out.println("");
                     System.out.println("Please choose a valid option");
             }
-        } while (control != 4);
+        } while (control != 5);
     }
 }

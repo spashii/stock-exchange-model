@@ -18,7 +18,7 @@ public class Parser {
     public static Date parseDate(String strDate) {
         final List<String> dateFormats = Arrays.asList("dd-MM-yyyy", "d-MMM-yy");
 
-        for(String format: dateFormats){
+        for (String format : dateFormats) {
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             try {
                 return sdf.parse(strDate);

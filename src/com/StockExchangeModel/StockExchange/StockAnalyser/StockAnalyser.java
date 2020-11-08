@@ -51,37 +51,36 @@ public class StockAnalyser extends Parser {
         ArrayList<String> ret = new ArrayList<>();
         if (analysableStocks.size() > 2) {
             // calculating average price
-            double average = 0.0;
+            double average;
             double sum = 0.0;
-            for(AnalysableStock a: analysableStocks) {
+            for (AnalysableStock a : analysableStocks) {
                 sum += a.getClosePrice();
             }
-            average = sum/analysableStocks.size();
+            average = sum / analysableStocks.size();
             ret.add("Average Stock Price = " + average);
             // calculating max drawdown
             double maxDrawdown = 0.0;
             double drawdown;
-            for(int i = 0; i<analysableStocks.size(); i++)  {
+            for (int i = 0; i < analysableStocks.size(); i++) {
                 drawdown = 0.0;
-                for(int j = i+1; j<analysableStocks.size(); j++) {
-                    if(analysableStocks.get(j).getClosePrice() <= analysableStocks.get(i).getClosePrice()) {
+                for (int j = i + 1; j < analysableStocks.size(); j++) {
+                    if (analysableStocks.get(j).getClosePrice() <= analysableStocks.get(i).getClosePrice()) {
                         drawdown += analysableStocks.get(i).getClosePrice() - analysableStocks.get(j).getClosePrice();
                         continue;
                     }
-                    maxDrawdown = (drawdown>maxDrawdown) ? drawdown: maxDrawdown;
+                    maxDrawdown = Math.max(drawdown, maxDrawdown);
                     break;
                 }
             }
             ret.add("Max Drawdown = " + maxDrawdown);
             // calculating max return potential percentage
             double returnPotential = 0.0;
-            for(AnalysableStock a : analysableStocks) {
+            for (AnalysableStock a : analysableStocks) {
                 returnPotential += Math.abs(a.getClosePrice() - a.getOpenPrice());
             }
-            double maxReturnPotentialPercentage = 100 * (returnPotential/analysableStocks.get(0).getClosePrice());
+            double maxReturnPotentialPercentage = 100 * (returnPotential / analysableStocks.get(0).getClosePrice());
             ret.add("Max Percentage Return Potential = " + maxReturnPotentialPercentage + " %");
-        }
-        else {
+        } else {
             ret.add("Not enough data to analyse");
         }
         return ret.toArray(new String[0]);
