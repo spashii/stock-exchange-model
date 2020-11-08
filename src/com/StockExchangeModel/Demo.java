@@ -12,8 +12,8 @@ public class Demo {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter name of Stock Exchange: ");
         System.out.print(">> ");
-        System.out.println("");
         String stockExchangeName = scanner.nextLine().trim();
+        System.out.println("");
         StockExchange se = new StockExchange(stockExchangeName);
         Interpreter interpreter = new Interpreter(se);
         int control;

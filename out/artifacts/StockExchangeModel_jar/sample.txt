@@ -2,7 +2,7 @@ company add infosys                   INFY IT          890  890  890  890
 company add tata_consultancy_services TCS  IT          2250 2250 2250 2250
 company add state_bank_of_india       SBI  banking     195  195  195  195
 company add mahindra_and_mahindra     M&M  automobiles 610  610  610  610
-company add cipla                     CIPL pharma      790  790  790  790
+company add cipla                     CIPLA pharma      790  790  790  790
 company add sunpharma                 SUPH pharma      790  790  790  790
 company add apple                     AAPL IT          2500 2500 2500 2500
 
