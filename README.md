@@ -9,7 +9,7 @@ This is an implementation of a model ‘Stock Exchange’. It is capable of regi
   * `SHOW_CATEGORY` - Shows all companies with category
   * `ADD` - Adds and registers a company
   * `DELETE` - Deletes and unregisters a company
-* TRADER
+* `TRADER`
   * `SHOW` - Shows trader
   * `SHOW_ALL` - Shows all registered traders
   * `ADD` - Adds and registers a trader
